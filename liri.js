@@ -4,24 +4,30 @@ require("dotenv").config();
 // importing the keys file and storing it in a variable
 var keys = require("./keys");
 const axios = require('axios');
-var movie = keys.ID.OMDB.id
-// var Spotify = require('node-spotify-api');
+var Spotify = require('node-spotify-api');
+var movie = keys.ID.OMDB.id;
+var bands = keys.ID.Bands.id;
 var command = process.argv[2];
 var input = process.argv[3];
 
 function getSongInfo() {
-  var spotify = new Spotify(keys.spotify);
-
-  if (command === "spotify-this-song") {
-    spotify.search({ type: 'track', query: "'" + input + "'" }, function (err, data) {
-      if (err) {
-        return console.log('Error occurred: ' + err);
-      }
-
-      console.log(data);
-    });
+  var spotify = new Spotify({
+    id: keys.ID.spotify.id,
+    secret: keys.ID.spotify.secret,
+  });
+   
+  spotify.search({ type: 'track', query: input, limit: 1 }, function(err, data) {
+    if (err) {
+      return console.log('Error occurred: ' + err);
+    }
+   
+  console.log(data.tracks.items); 
+  // console.log(data.tracks.items.name); 
+  // console.log(data.tracks.items.external_urls); 
+  // console.log(data.tracks.items.album); 
+  });
   };
-}
+
 
 
 ///////////////////////////// function to get movies
@@ -53,7 +59,7 @@ function getMovieInfo() {
 
 function bandsInTown() {
   console.log("Here is that band info you asked for:")
-  axios.get("https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp")
+  axios.get("https://rest.bandsintown.com/artists/" + input + "/events?app_id="+bands)
     .then(function (response) {
       // handle success
       for (let index = 0; index < response.data.length; index++) {
@@ -83,6 +89,9 @@ switch (command) {
   case "concert-this":
     bandsInTown()
     break;
+    case "spotify-this-song":
+      getSongInfo()
+      break;
   //   default:
   //     // code block
 }
