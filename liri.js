@@ -21,11 +21,19 @@ function getSongInfo() {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
-   
-  console.log(data.tracks.items); 
+    console.log("\r\n\r\n\r\n");
+
+  var artist = data.tracks.items[0].name; 
+  var trackTitle = data.tracks.items[0].artists[0].name; 
+  var spotInfo = data.tracks.items[0].preview_url; 
+  console.log("This song is by: "+trackTitle);
+  console.log("This is the song I found: "+artist);
+  console.log("Have a listen: "+spotInfo)
+  // console.log(data.tracks.items[0].album[0])
   // console.log(data.tracks.items.name); 
-  // console.log(data.tracks.items.external_urls); 
   // console.log(data.tracks.items.album); 
+  console.log("\r\n\r\n\r\n");
+
   });
   };
 
@@ -33,7 +41,7 @@ function getSongInfo() {
 
 ///////////////////////////// function to get movies
 function getMovieInfo() {
-
+  console.log("\r\n\r\n\r\n");
   console.log("Here is the movie info you asked for: ")
   axios.get("http://www.omdbapi.com/?apikey=" + movie + "&t=" + input)
     .then(function (response) {
@@ -46,6 +54,8 @@ function getMovieInfo() {
       console.log("Language: " + response.data.Language);
       console.log("Plot Summary: " + response.data.Plot);
       console.log("Starring " + response.data.Actors);
+      console.log("\r\n\r\n\r\n");
+
     })
     .catch(function (error) {
       // handle error
@@ -59,17 +69,20 @@ function getMovieInfo() {
 // //////////////////////// function for Bands
 
 function bandsInTown() {
+  console.log("\r\n\r\n\r\n");
   console.log("Here is that band info you asked for:")
   axios.get("https://rest.bandsintown.com/artists/" + input + "/events?app_id="+bands)
     .then(function (response) {
       // handle success
       for (let index = 0; index < response.data.length; index++) {
-        console.log("venue: " + response.data[index].venue.name);
+        console.log("Venue: " + response.data[index].venue.name);
         console.log("State: " + response.data[index].venue.region);
         console.log("City: " + response.data[index].venue.city);
         moment(response.data[index].datetime).format("MM/DD/YYY");
         console.log(moment(response.data[index].datetime).format("MM/DD/YYY"))
         console.log("");
+        console.log("\r\n\r\n\r\n");
+
       }
       // console.log(response.data[0].venue);
     })
@@ -82,7 +95,7 @@ function bandsInTown() {
     });
 }
 
-// switch case
+// switch case to run the program
 
 switch (command) {
   case "movie-this":
