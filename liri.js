@@ -5,6 +5,7 @@ require("dotenv").config();
 var keys = require("./keys");
 const axios = require('axios');
 var Spotify = require('node-spotify-api');
+var moment = require('moment');
 var movie = keys.ID.OMDB.id;
 var bands = keys.ID.Bands.id;
 var command = process.argv[2];
@@ -66,6 +67,8 @@ function bandsInTown() {
         console.log("venue: " + response.data[index].venue.name);
         console.log("State: " + response.data[index].venue.region);
         console.log("City: " + response.data[index].venue.city);
+        moment(response.data[index].datetime).format("MM/DD/YYY");
+        console.log(moment(response.data[index].datetime).format("MM/DD/YYY"))
         console.log("");
       }
       // console.log(response.data[0].venue);
