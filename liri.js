@@ -10,10 +10,29 @@ var moment = require('moment');
 var movie = keys.ID.OMDB.id;
 var bands = keys.ID.Bands.id;
 var command = process.argv[2];
-var input = replaceSpaces(process.argv[3]);
+// var input = replaceSpaces(process.argv[3]);
 
 
 
+
+// switch case to run the program
+switch (command) {
+  case "movie-this":
+    //     // code block
+    getMovieInfo()
+    break;
+  case "concert-this":
+    bandsInTown()
+    break;
+  case "spotify-this-song":
+    getSongInfo()
+    break;
+  case "do-what-it-says":
+    fileReader()
+    break;
+  //   default:
+  //     // code block
+}
 
 // ///////////// Get Rid of spaces
 function replaceSpaces(string) {
@@ -22,6 +41,7 @@ function replaceSpaces(string) {
 
 // /////////////////////////// Spotify request
 function getSongInfo() {
+  var input = replaceSpaces(process.argv[3]);
   var spotify = new Spotify({
     id: keys.ID.spotify.id,
     secret: keys.ID.spotify.secret,
@@ -42,7 +62,7 @@ function getSongInfo() {
     console.log("This song is by: " + trackTitle);
     console.log("This is the song I found: " + artist);
     console.log("Have a listen: " + spotInfo)
-    console.log(albumName);
+    console.log("Album: " + albumName);
 
     console.log("\r\n\r\n\r\n");
 
@@ -55,6 +75,7 @@ function getSongInfo() {
 
 ///////////////////////////// function to get movies
 function getMovieInfo() {
+  var input = replaceSpaces(process.argv[3]);
   console.log("\r\n\r\n\r\n");
   console.log("Here is the movie info you asked for: ")
   axios.get("http://www.omdbapi.com/?apikey=" + movie + "&t=" + input)
@@ -84,6 +105,7 @@ function getMovieInfo() {
 // //////////////////////// function for Bands
 
 function bandsInTown() {
+  var input = replaceSpaces(process.argv[3]);
   console.log("\r\n\r\n\r\n");
   console.log("Here is that band info you asked for:")
   axios.get("https://rest.bandsintown.com/artists/" + input + "/events?app_id=" + bands)
@@ -97,7 +119,6 @@ function bandsInTown() {
         console.log(moment(response.data[index].datetime).format("MM/DD/YYY"))
         console.log("");
         console.log("\r\n\r\n\r\n");
-
       }
       // console.log(response.data[0].venue);
     })
@@ -116,28 +137,26 @@ function fileReader() {
     if (error) {
       return console.log(error);
     }
-    console.log(data);
+    var array = data.split(",");
+    console.log(array);
+    var txtCommand = array[0];
+    var txtInput = array[1];
+    console.log(txtCommand);
+    console.log(txtInput)
 
+    switch (command) {
+      case "movie-this":
+        //     // code block
+        getMovieInfo()
+        break;
+      case "concert-this":
+        bandsInTown()
+        break;
+      case "spotify-this-song":
+        getSongInfo()
+        break;
+      //   default:
+      //     // code block
+    }
   });
 };
-
-
-// switch case to run the program
-
-switch (command) {
-  case "movie-this":
-    //     // code block
-    getMovieInfo()
-    break;
-  case "concert-this":
-    bandsInTown()
-    break;
-  case "spotify-this-song":
-    getSongInfo()
-    break;
-  case "do-what-it-says":
-    fileReader()
-    break;
-  //   default:
-  //     // code block
-}
