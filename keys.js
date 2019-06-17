@@ -1,6 +1,4 @@
 
-
-
 exports.ID = {
   OMDB:{
     id: process.env.OMDB_KEY
