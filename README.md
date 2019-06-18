@@ -5,7 +5,7 @@ An app that will search Spotify for songs, Bands in Town for concerts, and OMDB 
 
 
 
-#Technologies Used
+# Technologies Used
 
 ## Javascript
 ## Nodejs
