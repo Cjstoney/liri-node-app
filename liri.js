@@ -53,7 +53,7 @@ function getSongInfo() {
         return console.log('Error occurred: ' + err);
       }
       console.log("\r\n\r\n\r\n");
-            
+
       var artist = data.tracks.items[0].name;
       var trackTitle = data.tracks.items[0].artists[0].name;
       var spotInfo = data.tracks.items[0].preview_url;
@@ -183,19 +183,5 @@ function fileReader() {
     console.log(txtCommand);
     console.log(txtInput)
 
-    switch (command) {
-      case "movie-this":
-        //     // code block
-        getMovieInfo()
-        break;
-      case "concert-this":
-        bandsInTown()
-        break;
-      case "spotify-this-song":
-        getSongInfo()
-        break;
-      //   default:
-      //     // code block
-    }
   });
 };
