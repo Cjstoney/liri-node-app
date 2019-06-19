@@ -11,7 +11,7 @@ var movie = keys.ID.OMDB.id;
 var bands = keys.ID.Bands.id;
 var command = process.argv[2];
 var input = process.argv[3];
-
+var txtInput;
 // switch case to run the program
 switch (command) {
   case "movie-this":
@@ -92,8 +92,13 @@ function getSongInfo() {
 ///////////////////////////// function to get movies
 function getMovieInfo() {
 
+  console.log("looking at "+txtInput);
+  // if(input == undefined && txtInput !== undefined){
+  //   input = txtInput;
+  // }else{
+  //   input = replaceSpaces(process.argv[3]);
+  // }
   if (input !== undefined) {
-    input = replaceSpaces(process.argv[3]);
     console.log("\r\n\r\n\r\n");
     console.log("Here is the movie info you asked for: ")
     axios.get("http://www.omdbapi.com/?apikey=" + movie + "&t=" + input)
@@ -179,9 +184,25 @@ function fileReader() {
     var array = data.split(",");
     console.log(array);
     var txtCommand = array[0];
-    var txtInput = array[1];
+    input = array[1];
     console.log(txtCommand);
     console.log(txtInput)
-
+    switch (txtCommand) {
+      case "movie-this":
+        //     // code block
+        getMovieInfo()
+        break;
+      case "concert-this":
+        bandsInTown()
+        break;
+      case "spotify-this-song":
+        getSongInfo()
+        break;
+      case "do-what-it-says":
+        fileReader()
+        break;
+      //   default:
+      //     // code block
+    }
   });
 };
