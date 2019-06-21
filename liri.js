@@ -16,16 +16,16 @@ var txtInput;
 switch (command) {
   case "movie-this":
     //     // code block
-    getMovieInfo()
+    getMovieInfo(input)
     break;
   case "concert-this":
     bandsInTown()
     break;
   case "spotify-this-song":
-    getSongInfo()
+    getSongInfo(input)
     break;
   case "do-what-it-says":
-    fileReader()
+    fileReader(txtInput)
     break;
   //   default:
   //     // code block
@@ -37,7 +37,7 @@ function replaceSpaces(string) {
 };
 
 // /////////////////////////// Spotify request
-function getSongInfo() {
+function getSongInfo(holder) {
 
 
   var spotify = new Spotify({
@@ -45,10 +45,10 @@ function getSongInfo() {
     secret: keys.ID.spotify.secret,
   });
 
-  if (input !== undefined) {
-     input = replaceSpaces(process.argv[3]);
+  if (holder !== undefined) {
+     holder = replaceSpaces(process.argv[3]);
 
-    spotify.search({ type: 'track', query: input, limit: 1 }, function (err, data) {
+    spotify.search({ type: 'track', query: holder, limit: 1 }, function (err, data) {
       if (err) {
         return console.log('Error occurred: ' + err);
       }
@@ -90,18 +90,18 @@ function getSongInfo() {
 };
 
 ///////////////////////////// function to get movies
-function getMovieInfo() {
+function getMovieInfo(holder) {
 
   console.log("looking at "+txtInput);
-  // if(input == undefined && txtInput !== undefined){
-  //   input = txtInput;
-  // }else{
-  //   input = replaceSpaces(process.argv[3]);
-  // }
-  if (input !== undefined) {
+  if(holder == undefined && txtInput !== undefined){
+    holder = txtInput;
+  }else{
+    holder = replaceSpaces(process.argv[3]);
+  }
+  if (holder !== undefined) {
     console.log("\r\n\r\n\r\n");
     console.log("Here is the movie info you asked for: ")
-    axios.get("http://www.omdbapi.com/?apikey=" + movie + "&t=" + input)
+    axios.get("http://www.omdbapi.com/?apikey=" + movie + "&t=" + holder)
       .then(function (response) {
         // handle success
         console.log("Movie: " + response.data.Title);
@@ -184,7 +184,7 @@ function fileReader() {
     var array = data.split(",");
     console.log(array);
     var txtCommand = array[0];
-    input = array[1];
+    txtInput = array[1];
     console.log(txtCommand);
     console.log(txtInput)
     switch (txtCommand) {
@@ -197,9 +197,6 @@ function fileReader() {
         break;
       case "spotify-this-song":
         getSongInfo()
-        break;
-      case "do-what-it-says":
-        fileReader()
         break;
       //   default:
       //     // code block
