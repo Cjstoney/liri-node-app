@@ -1,7 +1,7 @@
 # liri-node-app
 An app that will use terminal commands to search Spotify for songs, Bands in Town for concerts, and OMDB for movies.
 
-[Image of movie app working](assets/img/movie-this)
+[Image of movie app working](assets/img/movie-this.png)
 
 
 
